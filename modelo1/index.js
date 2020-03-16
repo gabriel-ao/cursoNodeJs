@@ -1,38 +1,32 @@
 const express = require("express");
+const nunjucks = require("nunjucks");
 
 const app = express();
 
-const logMiddleware = (req, res, next) => {
-  console.log(
-    `HOST: ${req.headers.host} | URL: ${req.url} | METHOD: ${req.method}`
-  );
-  req.appName = "GoNode";
-  return next();
-};
-
-// app.get("/", (req, res) => {
-//   return res.send("heloo corona");
-// });
-
-app.use(logMiddleware);
-
-app.get("/", (req, res) => {
-  return res.send(`Bem-vindo ao ${req.appName}, ${req.query.name}`);
+nunjucks.configure("views", {
+  autoescape: true,
+  express: app,
+  watch: true
 });
 
-app.get("/nome/:name", (req, res) => {
-  return res.json({
-    message: `welcome, ${req.params.name}`
-  });
+// dizer que o express é proveniente de um formulario html
+app.use(express.urlencoded({ extended: false }));
+
+app.set("view engine", "njk");
+
+const users = ["gabriel oliveira", "maycon lucas", "augusto kalel"];
+
+app.get("/", (req, res) => {
+  return res.render("list", { users });
+});
+
+app.get("/new", (req, res) => {
+  return res.render("new");
+});
+
+app.post("/create", (req, res) => {
+  users.push(req.body.user);
+  return res.redirect("/");
 });
 
 app.listen(3000);
-
-// server http
-// const http = require("http");
-
-// http
-//   .createServer((req, res) => {
-//     return res.end("Hello world");
-//   })
-//   .listen(3000);
