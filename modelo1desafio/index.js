@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
   return res.render('age');
 });
 
-app.post('/resultado', logMiddleware, (req, res) => {
+app.post('/resultado', (req, res) => {
   if (req.body.age >= 18) {
     return res.render('major', { age: req.body.age });
   } else {
