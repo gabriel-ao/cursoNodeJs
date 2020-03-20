@@ -1,18 +1,19 @@
 const bcrypt = require("bcryptjs");
 
-module.exports = (sequelize, Datatypes) => {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
     {
-      name: Datatypes.STRING,
-      email: Datatypes.STRING,
-      avatar: Datatypes.STRING,
-      password: Datatypes.VIRTUAL,
-      password_hash: Datatypes.STRING,
-      provicer: Datatypes.BOOLEAN
+      name: DataTypes.STRING,
+      email: DataTypes.STRING,
+      avatar: DataTypes.STRING,
+      password: DataTypes.VIRTUAL,
+      password_hash: DataTypes.STRING,
+      provider: DataTypes.BOOLEAN
     },
     {
       hooks: {
+        // criação do usuario criptografando antes de salvar
         beforeSave: async user => {
           if (user.password) {
             user.password_hash = await bcrypt.hash(user.password, 8);
@@ -21,6 +22,11 @@ module.exports = (sequelize, Datatypes) => {
       }
     }
   );
+
+  // comando para verificar a senha é a mesma do banco de dados
+  User.prototype.checkPassword = function(password) {
+    return bcrypt.compare(password, this.password_hash);
+  };
 
   return User;
 };

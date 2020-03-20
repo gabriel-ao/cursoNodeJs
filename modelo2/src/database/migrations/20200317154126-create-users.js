@@ -11,7 +11,7 @@ module.exports = {
       },
       name: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       email: {
         allowNull: false,
@@ -35,7 +35,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      update_at: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
