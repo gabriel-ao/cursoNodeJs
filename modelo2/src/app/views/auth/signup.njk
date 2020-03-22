@@ -2,6 +2,9 @@
 
 {% block body %}
   <form action="/signup" method="post" enctype="multipart/form-data">
+
+    {%include "_partials/flash.njk"%}
+
     <label for="avatar">
       <img src="/images/avatar.svg" heigth="24" />
     </label>
@@ -14,7 +17,7 @@
 
     <label for="provider">
       <input type="checkbox" id="provider" name="provider" value="1" />
-      Sou Cabelereiro
+      Sou Cabeleireiro(a)
     </label>
 
     <button type="submit"> Criar Conta </button>
