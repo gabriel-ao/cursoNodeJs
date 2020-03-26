@@ -15,6 +15,7 @@ const DashboardController = require("./app/controllers/DashboardController");
 const FileController = require("./app/controllers/FileController");
 const AppointmentController = require("./app/controllers/AppointmentController");
 const AvailableController = require("./app/controllers/AvailableController");
+const AttendanceController = require("./app/controllers/AttendanceController");
 
 // variável global para que todas as views passem a conhecer as mensagens de erro
 routes.use((req, res, next) => {
@@ -46,7 +47,14 @@ routes.post("/signup", upload.single("avatar"), UserController.store);
 //dashboard
 routes.get("/app/dashboard", DashboardController.index);
 
+//agendamento
 routes.get("/app/appointments/new/:provider", AppointmentController.create);
+routes.post("/app/appointments/new/:provider", AppointmentController.store);
+
+// atendimento ao cliente
+routes.get("/app/attendance", AttendanceController.index)
+//routes.get("/app/attendance", AttendanceController.teste)
+
 
 routes.get("/app/available/:provider", AvailableController.index);
 

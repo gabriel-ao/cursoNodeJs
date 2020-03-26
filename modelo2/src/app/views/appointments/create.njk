@@ -16,9 +16,12 @@
       <input type="text" class="flatpickr" placeholder="Escolha uma data">
       <div id="hours"></div>
       <button type="submit"> Agendar </button>
+      
 
     </form>
-
+    
+    <br/>
+    <a href="/app/dashboard" class="logout"> Voltar </a>
 
   </div>
 
@@ -30,16 +33,13 @@
 
        onChange: function (date){
         fetch(`/app/available/{{ provider.id }}?date=${date[0].getTime()}`).then(function(response){
-          response.text().then(function(html)){
+          response.text().then(function(html){
             document.getElementById('hours').innerHTML = html
-          }
+          })
         })
       }
-
-
     })
   </script>
-
 
 {%endblock%}
 
